@@ -10,6 +10,8 @@ public class Main {
     private char letter;
     private char guessLetter;
     private String currentWord;
+    private int alphabetLength;
+    private int wordLength;
     private char[] greenLetters;
     private char[][] yellowLetters;
     private char[] greyLetters;
@@ -29,10 +31,12 @@ public class Main {
         this.letter = '\0';
         this.guessLetter = '\0';
         this.currentWord = "crane";
-        this.greenLetters = new char[5];
-        this.yellowLetters = new char[5][26];
-        this.greyLetters = new char[26];
-        this.yellowCount = new int[5];
+        this.alphabetLength = 26;
+        this.wordLength = 5;
+        this.greenLetters = new char[wordLength];
+        this.yellowLetters = new char[wordLength][alphabetLength];
+        this.greyLetters = new char[alphabetLength];
+        this.yellowCount = new int[wordLength];
         this.greyCount = 0;
         this.scanner = new Scanner(System.in);
         this.validWord = true;
@@ -58,7 +62,7 @@ public class Main {
 
         // order of process
         for (int i = 0; i <= 5; i++) {
-            //System.out.println("your test wordle word is " + GREEN + testWord + RESET); // be sure to reset to testWord
+            System.out.println("your test wordle word is " + GREEN + testWord + RESET); // be sure to reset to testWord
             if (currentWord == null) {
                 scanner.close();
                 System.exit(0);
@@ -150,7 +154,7 @@ public class Main {
                 }
 
                 // grey letter test
-                for (int i = 0; i < greyLetters.length; i++) {
+                for (int i = 0; i < alphabetLength; i++) {
                     if (!validWord)
                         break;
                     if (greyLetters[i] != '\0') {
@@ -165,8 +169,8 @@ public class Main {
 
                 }
                 // yellow letter test
-                for (int i = 0; i < yellowLetters.length; i++) {
-                    for (int j = 0; j < yellowLetters[i].length; j++) {
+                for (int i = 0; i < wordLength; i++) {
+                    for (int j = 0; j < alphabetLength; j++) {
                         if (yellowLetters[i][j] != '\0') {
                             if (currentWord.charAt(i) == yellowLetters[i][j]) {
                                 validWord = false;
@@ -178,8 +182,8 @@ public class Main {
                 }
 
                 // green to grey comparison test
-                for (int i = 0; i < greenLetters.length; i++) {
-                    for (int j = 0; j < greyLetters.length; j++) {
+                for (int i = 0; i < wordLength; i++) {
+                    for (int j = 0; j < alphabetLength; j++) {
                         if (greenLetters[i] == greyLetters[j] && greenLetters[i] != '\0' && greyLetters[j] != '\0') {
                             greyLetters[j] = '\0';
                             greyCount--;
