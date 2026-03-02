@@ -49,24 +49,42 @@ public class Main {
     }
 
     public void runProgram() throws IOException {
-        // comment out when not testing
-        Random rand = new Random();
-        int randNum = rand.nextInt(5757);
-        String testWord = "";
-        BufferedReader reader = new BufferedReader(new java.io.FileReader("words.txt"));
-        for (int i = 0; i < randNum; i++) {
-            testWord = reader.readLine();
+        String input;
+        boolean test = false;
+        while (true) {
+            System.out.println("Would you like to run a test?");
+            input = scanner.nextLine().toUpperCase();
+            if (input.equals("Y")) {
+                System.out.println("The Program will run in test mode.");
+                test = true;
+                break;
+            } else if (input.equals("N")) {
+                System.out.println("The program will run normally.");
+                break;
+            } else {
+                System.out.println("Invalid input Please eneter either Y or N.");
+                continue;
+            }
         }
+        if (test) {
+            Random rand = new Random();
+            int randNum = rand.nextInt(5757);
+            String testWord = "";
+            BufferedReader reader = new BufferedReader(new java.io.FileReader("words.txt"));
+            for (int i = 0; i < randNum; i++) {
+                testWord = reader.readLine();
+            }
 
-        reader.close();
-
-        // order of process
-        for (int i = 0; i <= 5; i++) {
-            System.out.println("your test wordle word is " + GREEN + testWord + RESET); // be sure to reset to testWord
+            reader.close();
+            System.out.println("your test wordle word is\n" + GREEN + testWord + RESET); // be sure to reset to testWord
             if (currentWord == null) {
                 scanner.close();
                 System.exit(0);
             }
+        }
+
+        // order of process
+        for (int i = 0; i <= 5; i++) {
             System.out.println("input " + YELLOW + currentWord + RESET + " into wordle.");
             currentGuess = getAnswer(); // get answer from player input of the first word
             for (int j = 0; j < 5; j++) {
@@ -200,12 +218,9 @@ public class Main {
             System.out.println(RED + "something went wrong" + RESET);
             e.printStackTrace();
         }
-        // System.out.println(RED + usedWords + RESET);
-        // System.out.println(usedWords.size());
         System.out.println("\nKnown green letters: " + GREEN + java.util.Arrays.toString(greenLetters) + RESET);
         System.out.println("Known yellow letters: " + YELLOW + java.util.Arrays.deepToString(yellowLetters) + RESET);
         System.out.println("Known red letters: " + RED + java.util.Arrays.toString(greyLetters) + RESET + "\n");
-        // System.out.println("new word is " + YELLOW + currentWord + RESET);
         return currentWord;
     }
 }
